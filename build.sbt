@@ -59,28 +59,17 @@ logLevel in Compile := Level.Debug
 
 persistLogLevel := Level.Debug
 
-def zipArtifacts(parts: Seq[File]): Seq[Setting[_]] = {
-  parts.flatMap { part =>
-    val components = part.baseAndExt._1.split('.')
-    val (art,index) = (components(0), components(1))
-    println(s"part: $index")
-    println(s"art: $art")
-    val a = Def.setting[Artifact] {
-      Artifact(art, "zip", "zip", Some(index), Seq(), None, Map())
-    }
-    val f = Def.task[File] {
-      part
-    }
-    addArtifact(a, f)
-  }
-}
-
 lazy val core = Project("com_nomagic_magicdraw_package_upload", file("."))
   .settings(noSourcesSettings)
   .settings(
     name := "com.nomagic.magicdraw.package",
     moduleName := name.value,
     organization := "org.omg.tiwg.vendor.nomagic")
-  .settings(zipArtifacts( ((file(".") / "downloads" / "parts") * "*.part*.zip").get ) : _*)
+  .settings(
+    projectID := {
+      val previous = projectID.value
+      previous.extra("md.core" -> "http://webdev.nomagic.com/noinstall/magicdraw/ltr/latest")
+    }
+  )
 
 
