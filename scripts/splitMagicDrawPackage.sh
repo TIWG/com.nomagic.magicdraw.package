@@ -8,7 +8,8 @@ if [[ $# -ne 1 ]]; then
 fi
 
 f=$1
-size=$(stat --format="%s" $f)
+# This does not work on MacOS X - option --format is also not standard for size
+#size=$(stat --format="%s" $f)
 
 mkdir -p parts
 
