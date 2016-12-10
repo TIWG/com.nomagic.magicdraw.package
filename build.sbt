@@ -68,7 +68,7 @@ lazy val core = Project("com_nomagic_magicdraw_package_upload", file("."))
   .settings(
     projectID := {
       val previous = projectID.value
-      previous.extra("md.core" -> "http://webdev.nomagic.com/noinstall/magicdraw/ltr/latest")
+      previous.extra("md.core" -> "http://api.nomagic.com/download_api/noinstall/magicdraw/fr/latest")
     }
   )
 
