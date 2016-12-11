@@ -7,10 +7,6 @@ scalaVersion := "2.11.8"
 
 updateOptions := updateOptions.value.withCachedResolution(true)
 
-resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce")
-
-resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg")
-
 PgpKeys.useGpg := true
 
 PgpKeys.useGpgAgent := true
