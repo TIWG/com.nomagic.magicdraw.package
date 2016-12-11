@@ -7,10 +7,6 @@ scalaVersion := "2.11.8"
 
 updateOptions := updateOptions.value.withCachedResolution(true)
 
-resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce")
-
-resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg")
-
 PgpKeys.useGpg := true
 
 PgpKeys.useGpgAgent := true
@@ -59,28 +55,17 @@ logLevel in Compile := Level.Debug
 
 persistLogLevel := Level.Debug
 
-def zipArtifacts(parts: Seq[File]): Seq[Setting[_]] = {
-  parts.flatMap { part =>
-    val components = part.baseAndExt._1.split('.')
-    val (art,index) = (components(0), components(1))
-    println(s"part: $index")
-    println(s"art: $art")
-    val a = Def.setting[Artifact] {
-      Artifact(art, "zip", "zip", Some(index), Seq(), None, Map())
-    }
-    val f = Def.task[File] {
-      part
-    }
-    addArtifact(a, f)
-  }
-}
-
 lazy val core = Project("com_nomagic_magicdraw_package_upload", file("."))
   .settings(noSourcesSettings)
   .settings(
     name := "com.nomagic.magicdraw.package",
     moduleName := name.value,
     organization := "org.omg.tiwg.vendor.nomagic")
-  .settings(zipArtifacts( ((file(".") / "downloads" / "parts") * "*.part*.zip").get ) : _*)
+  .settings(
+    projectID := {
+      val previous = projectID.value
+      previous.extra("md.core" -> "http://api.nomagic.com/download_api/noinstall/magicdraw/ltr/latest")
+    }
+  )
 
 
