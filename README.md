@@ -8,6 +8,6 @@ The extra attribute is called `md.core`. It can be found in the `properties` sec
 
 ``
 <properties>
-    <md.core>http://webdev.nomagic.com/noinstall/magicdraw/ltr/latest</md.core>
+    <md.core>http://api.nomagic.com/download_api/noinstall/magicdraw/ltr/latest</md.core>
 </properties>
 ``
